@@ -1,0 +1,63 @@
+vector<int>ans;
+     int counter=1;
+     
+     void dfs(vector<int>adj[],int V,int c,int d,vector<int>&lt,vector<int>&it,vector<bool>&visited,int parent,int sv,vector<int>&mark)
+     {
+         visited[sv]=true;
+         lt[sv]=it[sv]=counter++;
+         int child=0;
+         for(auto e:adj[sv])
+         {
+             if(parent==e)continue;
+             else if(!visited[e])
+             {
+                 dfs(adj,V,c,d,lt,it,visited,sv,e,mark);
+                 if(it[sv]<=lt[e] && parent!=-1)
+                 {
+                    mark[sv]=1; 
+                 }
+                lt[sv]=min(lt[sv],lt[e]);
+                child++;
+             }
+             else
+             {
+                 lt[sv]=min(lt[sv],it[e]);
+             }
+             
+         }
+         
+         if(child>1 && parent==-1)
+         {
+             mark[sv]=1;
+         }
+     }
+     
+  
+  
+  
+    vector<int> articulationPoints(int V, vector<int>adj[]) {
+        
+       vector<int>lt(V,0),it(V,0);
+        vector<bool>visited(V,false);
+        vector<int>mark(V,0);
+        for(int i=0;i<V;i++)
+        {
+            if(!visited[i])
+            {
+                dfs(adj,V,5,6,lt,it,visited,-1,i,mark);
+            }
+        }
+        
+        for(int i=0;i<V;i++)
+        {
+            if(mark[i]) ans.push_back(i);
+        }
+        
+        if(ans.size()==0)
+        {
+            ans.push_back(-1);
+        return ans;
+        }
+        return ans;
+        
+    }
