@@ -1,0 +1,64 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+
+
+//adjancy graph
+
+    int n;
+    cout<<"enter your number of verticees"<<endl;
+    cin>>n;
+    vector<vector<int>>edges(n);
+    int e;
+    cout<<"enter your number if edges"<<endl;
+    cin>>e;
+    vector<int>indegree(n,0);
+    while(e--)
+    {
+        int sv,ev;
+        cout<<"enter your starting verticees"<<endl;
+        cin>>sv;
+        cout<<"enter your ending verticees"<<endl;
+        cin>>ev;
+        edges[sv].push_back(ev);
+        indegree[ev]++;
+    }
+
+    queue<int>pv;
+    for(int i=0;i<n;i++)
+    if(indegree[i]==0)pv.push(i);
+
+    vector<int>res;
+
+    while(!pv.empty())
+    {
+        int top=pv.front();pv.pop();
+        res.push_back(top);
+        for(auto e:edges[top])
+        {
+            indegree[e]--;
+            if(indegree[e]==0)
+            pv.push(e);
+        }
+    }
+
+
+    for(auto e:res)
+    {
+        cout<<e<<" ";
+    }
+
+cout<<endl;
+
+
+
+
+
+
+
+
+
+    return 0;
+}
