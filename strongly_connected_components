@@ -1,0 +1,66 @@
+public:
+	void dfs(int node, unordered_map<int,bool>& vis, stack<int>& st, unordered_map<int,set<int>>& adj){
+	    vis[node]=true;
+	    for(auto i:adj[node]){
+	        if(!vis[i])
+	            dfs(i,vis,st,adj);
+	    }
+	    st.push(node);
+	}
+	
+	void revdfs(int node, unordered_map<int,bool>& vis, unordered_map<int,set<int>>& adj){
+	    vis[node]=true;
+	    for(auto i:adj[node]){
+	        if(!vis[i])
+	            revdfs(i,vis,adj);
+	    }
+	}
+	
+	//Function to find number of strongly connected components in the graph.
+    int kosaraju(int V, vector<vector<int>>& adj){
+        
+        // create adj list though already given but in vector form
+        unordered_map<int,set<int>> m;
+        for(int i=0;i<adj.size();i++){
+            for(int j=0;j<adj[i].size();j++)
+                m[i].insert(adj[i][j]);
+        }
+        
+        // step-1)
+        // topoSort and fill stack
+        unordered_map<int,bool> vis;
+        stack<int> st;
+        
+        for(int i=0;i<V;i++){
+            if(!vis[i])
+                dfs(i,vis,st,m);
+        }
+        
+        // step-2)
+        // transpose the graph
+        unordered_map<int,set<int>> t;
+        for(int i=0;i<V;i++){
+          for(auto nbr:adj[i])
+            t[nbr].insert(i);
+        }
+        
+        // make the vector vis again all false to do dfs again
+        for(int i=0;i<V;i++)
+            vis[i]=false;
+            
+        // step-3)
+        // do dfs of new graph
+        int count=0;
+        while(!st.empty()){
+            int node = st.top();
+            st.pop();
+            if(!vis[node]){
+                count++;
+                revdfs(node,vis,t);
+            }
+        }
+        return count;   
+        
+    
+        
+    }
