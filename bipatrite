@@ -1,0 +1,66 @@
+bool helper(vector<int>adj[],int V,int sv,vector<bool>&colors,vector<bool>&visited,queue<int>&pv)
+	
+	{
+	    pv.push(sv);
+	    visited[sv]=true;
+	    colors[sv]=0;
+	    
+	    while(!pv.empty())
+	    {
+	      int top_element=pv.front();
+	      pv.pop();
+	      
+	      for(auto j:adj[top_element])
+	      {
+	          if(visited[j] && colors[j]==colors[top_element])
+	          {
+	              return false;
+	              
+	          }
+	          
+	          if(!visited[j])
+	          {
+	              pv.push(j);
+	              visited[j]=true;
+	              colors[j]=!colors[top_element];
+	          }
+	             }
+	   
+	    }
+	    return true; 
+	} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+	bool isBipartite(int V, vector<int>adj[]){
+	    
+	    queue<int>pv;
+	    
+	    vector<bool>visited(V);
+	   
+	    vector<bool>colors(V);
+	   
+	    
+	  
+	  for(int i=0;i<V;i++)
+	  {
+	      if(!visited[i] && !helper(adj,V,i,colors,visited,pv))
+	      {
+	          return false;
+	      }
+	  }
+	    
+	    return true;
+	    
+	}
+	
