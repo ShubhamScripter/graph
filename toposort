@@ -1,0 +1,62 @@
+vector<int>ans;
+	   
+	   
+	//Function to return list containing vertices in Topological order.
+	
+	void dfs(int start,vector<int>adj[],int V,vector<bool>&visited)
+	{
+	   visited[start]=true;
+	   
+	   
+	  for(auto j:adj[start])
+	  {
+	     if(!visited[j])
+	     {
+	         dfs(j,adj,V,visited);
+	     }
+	      
+	  }
+	    
+	  ans.push_back(start);
+	    
+	
+	    
+	    
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	   
+	   vector<bool>visited(V);
+	   
+	   for(int i=0;i<V;i++)
+	   {
+	       if(!visited[i])
+	       {
+	           dfs(i,adj,V,visited);
+	       }
+	   }
+	   
+	   reverse(ans.begin(),ans.end());
+	   
+	   return ans;
+	   
+	   
+	  
+	}
