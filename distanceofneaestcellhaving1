@@ -1,0 +1,48 @@
+	vector<vector<int>>nearest(vector<vector<int>>grid)
+	{
+	   int m=grid.size(),n=grid[0].size();
+	   
+	   queue<pair<int,int>>pq;
+	   
+	   for(int i=0;i<m;i++)
+	   {
+	       for(int j=0;j<n;j++)
+	       {
+	           if(grid[i][j])
+	           {grid[i][j]=0;pq.push({i,j});}
+	           else grid[i][j]=1e8;
+	       }
+	   }
+	   
+	   while(!pq.empty())
+	   {
+	       int row=pq.front().first,col=pq.front().second;pq.pop();
+	       
+	       if(row-1>=0 && grid[row-1][col]>1+grid[row][col])
+	       {
+	        grid[row-1][col]=1+grid[row][col];pq.push({row-1,col});   
+	       }
+	       if(col-1>=0 && grid[row][col-1]>1+grid[row][col])
+	       {
+	        grid[row][col-1]=1+grid[row][col];pq.push({row,col-1});   
+	       }
+	       if(row+1<m && grid[row+1][col]>1+grid[row][col])
+	       {
+	        grid[row+1][col]=1+grid[row][col];pq.push({row+1,col});   
+	       }
+	       if(col+1<n && grid[row][col+1]>1+grid[row][col])
+	       {
+	        grid[row][col+1]=1+grid[row][col];pq.push({row,col+1});   
+	       }
+	       
+	   }
+	   
+	   return grid;
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	}
