@@ -13,7 +13,7 @@ int main()
     for(auto e:graph)
     {
        
-        edges[e[0].push_back(e[1]);
+        edges[e[0]].push_back(e[1]);
         edges[e[1]].push_back(e[0]);
     }
 
